@@ -3,6 +3,8 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signUp } from '../../store/actions/authActions';
 
+console.log(signUp)
+
 class SignUp extends Component {
     state = {
         email: '',
@@ -13,7 +15,7 @@ class SignUp extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        // console.log(this.state);
+        this.props.signUp(this.state);
     }
 
     handleChange = (e) => {
@@ -55,12 +57,14 @@ class SignUp extends Component {
 }
 
 const mapStateToProps = (state) => {
+    // console.log('STATE == ', state)
     return {
         auth: state.firebase.auth
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
+    // console.log('DISPATCH == ', dispatch)
     return {
         signUp: (newUser) => dispatch(signUp(newUser))
     }

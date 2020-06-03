@@ -1,5 +1,6 @@
-import * as firebase from 'firebase'
-import 'firebase/auth'
+import firebase, { db } from '../../config/fbConfig';
+import 'firebase/auth';
+import 'firebase/firestore';
 
 export const signIn = (credentials) => {
     return (dispatch, getState) => {
@@ -29,12 +30,12 @@ export const signOut = () => {
 
 export const signUp = (newUser) => {
     return (dispatch, getState) => {
-        // const firestore = getFirestore();
+        console.log('DB ====', db);
         firebase.auth().createUserWithEmailAndPassword(
             newUser.email,
             newUser.password
         ).then((resp) => {
-            return firebase.collection('users').doc(resp.user.uid).set({
+            return db.collection('users').doc(resp.user.uid).set({
                 firstName: newUser.firstName,
                 lastName: newUser.lastName,
                 initials: `${newUser.firstName[0]}${newUser.lastName[0]}`
