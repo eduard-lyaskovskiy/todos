@@ -1,26 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import Navbar from './components/layout/Navbar';
+import Dashboard from './components/dashboard/Dashboard';
+import TodoDeatails from './components/todos/TodoDeatails';
+import SignIn from './components/auth/SignIn';
+import SignUp from './components/auth/SignUp';
+import CreateTodo from './components/todos/CreateTodo';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	return (
+		<BrowserRouter>
+			<div className="app">
+				<Navbar></Navbar>
+				<Switch>
+					<Route exact path='/' component={Dashboard}></Route>
+					<Route path='/todo/:id' component={TodoDeatails}></Route>
+					<Route path='/signin' component={SignIn}></Route>
+					<Route path='/signup' component={SignUp}></Route>
+					<Route path='/create' component={CreateTodo}></Route>
+				</Switch>
+			</div>
+		</BrowserRouter>
+	);
 }
 
 export default App;
