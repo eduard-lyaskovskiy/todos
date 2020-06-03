@@ -14,6 +14,12 @@ const todoReducer = (state = initState, action) => {
         case 'CREATED_TODO_ERROR':
             console.log('created todo with error', action.err);
             return state;
+        case 'DELETE_PROJECT':
+            console.log('delete project');
+            return state;
+        case 'DELETE_PROJECT_ERROR':
+            console.log('delete project error', 'state: ', state, 'action: ', action.project);
+            return state;
         default:
             return state;
     }

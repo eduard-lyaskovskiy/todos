@@ -11,8 +11,8 @@ class CreateTodo extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        // console.log(this.state);
         this.props.createTodo(this.state)
+        this.props.history.push('/')
     }
 
     handleChange = (e) => {

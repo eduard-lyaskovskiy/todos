@@ -3,10 +3,18 @@ import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { Redirect } from 'react-router-dom';
+import { deleteTodo } from '../../store/actions/todoActions';
+import moment from 'moment';
 
 const ProjectDeatails = (props) => {
     console.log(props)
-    const { todo, auth } = props;
+    const { todo, auth, id } = props;
+    console.log(id)
+    const handleDelete = e => {
+        e.preventDefault();
+        props.deleteTodo(id);
+        props.history.push('/')
+    }
     if (!auth.uid) return <Redirect to='/signin' />
     if (todo) {
         return (
@@ -18,9 +26,10 @@ const ProjectDeatails = (props) => {
                     </div>
                     <div className="card-action grey lighten-4 grey-text">
                         <div>Posted by {todo.authorFirstName} {todo.authorLastName}</div>
-                        <div>01.06.2020 15:16</div>
+                        <div>{moment(todo.createdAt.toDate()).format('LTS')}</div>
                     </div>
                 </div>
+                <button onClick={handleDelete}>Done</button>
             </div>
         )
     } else {
@@ -40,12 +49,19 @@ const mapStateToProps = (state, ownProps) => {
     const todo = todos ? todos[id] : null
     return {
         todo: todo,
-        auth: state.firebase.auth
+        auth: state.firebase.auth,
+        id: id
+    }
+}
+
+const mapDistpacthToProps = (dispatch) => {
+    return {
+        deleteTodo: (id) => dispatch(deleteTodo(id))
     }
 }
 
 export default compose(
-    connect(mapStateToProps),
+    connect(mapStateToProps, mapDistpacthToProps),
     firestoreConnect([{
         collection: 'todos'
     }])

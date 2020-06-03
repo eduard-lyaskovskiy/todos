@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 
 const TodoSummary = ({ todo }) => {
     return (
@@ -6,7 +7,7 @@ const TodoSummary = ({ todo }) => {
             <div className="card-content grey-text text-darken-3">
                 <span className="card-title">{todo.title}</span>
                 <p>Posted by {todo.authorFirstName} {todo.authorLastName}</p>
-                <p className="grey-text">30.05.2020, 18:55</p>
+                <p className="grey-text">{moment(todo.createdAt.toDate()).format('LTS')}</p>
             </div>
         </div>
     )
